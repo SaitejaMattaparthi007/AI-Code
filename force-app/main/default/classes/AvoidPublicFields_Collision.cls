@@ -4,9 +4,11 @@
  * Expected fix: does not create a colliding member; the class still compiles.
  */
 public class AvoidPublicFields_Collision {
-    public String name;
+    private String nameValue;
+    public String name { get { return nameValue; } set { nameValue = value; } }
 
     public String getName() {
         return name == null ? 'Unknown' : name;
     }
 }
+
