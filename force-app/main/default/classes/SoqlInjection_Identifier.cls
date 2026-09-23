@@ -7,8 +7,8 @@ public with sharing class SoqlInjection_Identifier {
     public List<SObject> byField() {
         String fieldName = ApexPages.currentPage().getParameters().get('field');
         String value = ApexPages.currentPage().getParameters().get('value');
-        String q = 'SELECT Id FROM Account WHERE ' + fieldName +
-                   ' = \'' + String.escapeSingleQuotes(value) + '\'';
-        return Database.query(q);
+        Schema.SObjectField f = Schema.SObjectType.Account.fields.getMap().get(fieldName);
+                   return Database.query('SELECT Id FROM Account WHERE ' + f + ' = :value');
     }
 }
+
