@@ -5,7 +5,8 @@
  */
 public with sharing class SoqlInjection_NonString {
     public List<Opportunity> above(String amountParam) {
-        String q = 'SELECT Id, Name FROM Opportunity WHERE Amount > ' + amountParam;
-        return Database.query(q);
+        Double amountValue = Double.valueOf(amountParam);
+        return Database.query('SELECT Id, Name FROM Opportunity WHERE Amount > :amountValue');
     }
 }
+
