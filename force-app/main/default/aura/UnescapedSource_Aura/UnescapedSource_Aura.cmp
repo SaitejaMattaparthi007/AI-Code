@@ -1,0 +1,7 @@
+<!-- US-06  sf:UnescapedSource
+     aura:unescapedHtml renders raw markup.
+     Expected fix: lightning:formattedRichText, or aura:text for plain text. -->
+<aura:component>
+    <aura:attribute name="body" type="String"/>
+    <aura:unescapedHtml value="{!v.body}"/>
+</aura:component>

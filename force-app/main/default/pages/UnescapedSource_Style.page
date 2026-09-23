@@ -1,0 +1,9 @@
+<!-- US-05  sf:UnescapedSource
+     Merge field inside a style block. No safe standard encoder exists for CSS context.
+     Expected: NO fix offered. -->
+<apex:page controller="ThemeController">
+    <style>
+        .banner { background-color: {!themeColor}; }
+    </style>
+    <div class="banner">Welcome</div>
+</apex:page>

@@ -1,0 +1,10 @@
+<!-- US-07  sf:UnescapedSource  (snippet-level boundary probe)
+     The violating tag spans five lines.
+     Expected: the Block-level snippet captures the whole tag; the fix is valid markup. -->
+<apex:page controller="SearchController">
+    <apex:outputText
+        id="resultText"
+        styleClass="result"
+        escape="false"
+        value="{!searchTerm}"/>
+</apex:page>

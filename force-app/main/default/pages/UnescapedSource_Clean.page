@@ -1,0 +1,9 @@
+<!-- US-08  sf:UnescapedSource  (negative case)
+     Properly escaped. Expected: no issue raised. -->
+<apex:page controller="SearchController">
+    <apex:outputText value="{!searchTerm}"/>
+    <script>
+        var term = '{!JSENCODE(searchTerm)}';
+        console.log(term);
+    </script>
+</apex:page>

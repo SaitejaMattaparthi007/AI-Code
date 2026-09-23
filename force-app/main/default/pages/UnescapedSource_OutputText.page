@@ -1,0 +1,6 @@
+<!-- US-01  sf:UnescapedSource
+     escape="false" on apex:outputText.
+     Expected fix: remove the attribute, or set escape="true". -->
+<apex:page controller="SearchController">
+    <apex:outputText escape="false" value="{!searchTerm}"/>
+</apex:page>

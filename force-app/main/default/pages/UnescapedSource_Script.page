@@ -1,0 +1,9 @@
+<!-- US-02  sf:UnescapedSource
+     Merge field inside a script block.
+     Expected fix: JSENCODE. Not HTMLENCODE. -->
+<apex:page controller="SearchController">
+    <script>
+        var term = '{!searchTerm}';
+        console.log(term);
+    </script>
+</apex:page>

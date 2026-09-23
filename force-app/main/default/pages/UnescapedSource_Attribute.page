@@ -1,0 +1,6 @@
+<!-- US-03  sf:UnescapedSource
+     Merge field in an HTML attribute value.
+     Expected fix: HTMLENCODE. -->
+<apex:page controller="SearchController">
+    <div title="{!searchTerm}" class="result">Results</div>
+</apex:page>

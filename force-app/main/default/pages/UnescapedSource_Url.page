@@ -1,0 +1,6 @@
+<!-- US-04  sf:UnescapedSource
+     Merge field in an href.
+     Expected fix: URLENCODE. -->
+<apex:page controller="SearchController">
+    <a href="{!returnUrl}">Back to results</a>
+</apex:page>
