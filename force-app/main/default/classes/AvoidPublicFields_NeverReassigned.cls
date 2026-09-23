@@ -3,7 +3,7 @@
  * Assigned only in the constructor. Expected fix: add the final modifier, keep it public.
  */
 public class AvoidPublicFields_NeverReassigned {
-    public String region;
+    public String region { get; set; }
 
     public AvoidPublicFields_NeverReassigned(String region) {
         this.region = region;
@@ -13,3 +13,4 @@ public class AvoidPublicFields_NeverReassigned {
         return 'Region: ' + region;
     }
 }
+
