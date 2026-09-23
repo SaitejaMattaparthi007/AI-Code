@@ -5,7 +5,7 @@
  */
 public with sharing class SoqlInjection_Bind {
     public List<Contact> search(String lastName) {
-        String q = 'SELECT Id, Email FROM Contact WHERE LastName = \'' + lastName + '\' LIMIT 50';
-        return Database.query(q);
+        return [SELECT Id, Email FROM Contact WHERE LastName = :lastName LIMIT 50];
     }
 }
+

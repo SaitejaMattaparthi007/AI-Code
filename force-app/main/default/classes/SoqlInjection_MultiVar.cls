@@ -8,8 +8,7 @@ public with sharing class SoqlInjection_MultiVar {
         Map<String, String> p = ApexPages.currentPage().getParameters();
         String company = p.get('company');
         String status = p.get('status');
-        String q = 'SELECT Id FROM Lead WHERE Company = \'' + company +
-                   '\' AND Status = \'' + status + '\'';
-        return Database.query(q);
+        return Database.query('SELECT Id FROM Lead WHERE Company = :company AND Status = :status');
     }
 }
+

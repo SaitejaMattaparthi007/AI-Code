@@ -6,7 +6,7 @@
 public with sharing class SoqlInjection_Basic {
     public List<Account> findByName() {
         String nameParam = ApexPages.currentPage().getParameters().get('name');
-        String q = 'SELECT Id, Name FROM Account WHERE Name = \'' + nameParam + '\'';
-        return Database.query(q);
+        return Database.query('SELECT Id, Name FROM Account WHERE Name = :nameParam');
     }
 }
+
