@@ -3,12 +3,21 @@
  */
 public with sharing class SearchController {
     public String searchTerm {
-        get { return ApexPages.currentPage().getParameters().get('q'); }
+        get {
+        String rawSearchTerm = ApexPages.currentPage().getParameters().get('q');
+        String safeSearchTerm = rawSearchTerm == null ? null : rawSearchTerm.escapeHtml4();
+        return safeSearchTerm;
+        }
         set;
     }
 
     public String returnUrl {
-        get { return ApexPages.currentPage().getParameters().get('retURL'); }
+        get {
+        String retUrlParam = ApexPages.currentPage().getParameters().get('retURL');
+        String safeRetUrl = retUrlParam == null ? null : retUrlParam.escapeHtml4();
+        return safeRetUrl;
+        }
         set;
     }
 }
+

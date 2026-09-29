@@ -3,7 +3,11 @@
  */
 public with sharing class ThemeController {
     public String themeColor {
-        get { return ApexPages.currentPage().getParameters().get('color'); }
+        get {
+        String themeColorParam = ApexPages.currentPage().getParameters().get('color');
+        return themeColorParam == null ? null : themeColorParam.escapeHtml4();
+        }
         set;
     }
 }
+
