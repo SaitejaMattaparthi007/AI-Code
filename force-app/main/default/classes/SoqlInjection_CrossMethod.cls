@@ -5,7 +5,9 @@
  */
 public with sharing class SoqlInjection_CrossMethod {
     private String term() {
-        return ApexPages.currentPage().getParameters().get('term');
+        String term = ApexPages.currentPage().getParameters().get('term');
+        String safeTerm = term == null ? null : term.escapeHtml4();
+        return safeTerm;
     }
 
     public List<Account> run() {
@@ -13,3 +15,4 @@ public with sharing class SoqlInjection_CrossMethod {
         return Database.query(q);
     }
 }
+
