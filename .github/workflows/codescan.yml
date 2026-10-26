@@ -1,0 +1,104 @@
+name: CI
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+env:
+  SONAR_SCANNER_VERSION: 5.0.1.3006
+
+on:
+  push:
+    branches:
+      - "*"
+    paths-ignore:
+      - "src/test/java/**"
+      - "target/**"
+
+  pull_request:
+    branches:
+      - "*"
+    paths-ignore:
+      - "src/test/java/**"
+      - "target/**"
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache files
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar
+          key: ${{ runner.os }}-sonar
+          restore-keys: |
+            ${{ runner.os }}-sonar
+      # -----------------------------
+      # CodeScan Analysis - Push
+      # -----------------------------
+      - name: Run CodeScan On Push
+        if: github.event_name == 'push'
+        uses: codescan-io/codescan-scanner-action@prerelease-3.1
+        with:
+          scanChangedFilesOnly: true
+          organization: sub-001
+          projectKey: ghactions-stg
+          codeScanUrl: https://staging.codescan.io/
+          login: squ_b101e01dd0e4cf1cda9325f29fe27c603f386060
+
+          # SARIF generation enabled
+          generateSarifFile: true
+
+      # -----------------------------
+      # CodeScan Analysis - Pull Request
+      # -----------------------------
+      - name: Run CodeScan On PR
+        if: github.event_name == 'pull_request'
+        uses: codescan-io/codescan-scanner-action@prerelease-3.1
+        with:
+          scanChangedFilesOnly: true
+          organization: sub-001
+          projectKey: ghactions-stg
+          codeScanUrl: https://staging.codescan.io/
+          login: squ_b101e01dd0e4cf1cda9325f29fe27c603f386060
+
+          # SARIF generation enabled
+          generateSarifFile: true
+
+          args: |
+            sonar.pullrequest.branch=${{ github.head_ref }}
+            sonar.pullrequest.base=${{ github.base_ref }}
+            sonar.pullrequest.key=${{ github.event.number }}
+      # -----------------------------
+      # Verify SARIF
+      # -----------------------------
+      - name: Verify SARIF file
+        run: |
+          echo "Checking SARIF file..."
+          pwd
+          ls -la
+          ls -lh codescan.sarif
+      # -----------------------------
+      # SARIF Upload
+      # -----------------------------
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: codescan.sarif
+          wait-for-processing: true
+
+      # -----------------------------
+      # SARIF Artifact Upload
+      # -----------------------------
+      - name: Archive CodeScan SARIF results
+        uses: actions/upload-artifact@v4
+        with:
+          name: codescan-sarif
+          path: codescan.sarif
